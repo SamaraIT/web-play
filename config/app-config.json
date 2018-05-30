@@ -1,0 +1,23 @@
+{
+  "app": {
+    "applicationName": "demo-app",
+    "applicationVersion": "0.0.1",
+    "environmentName": "R",
+    "routerConfiguration": {
+      "unauthenticatedRoutes": [
+        { "path": "health-module", "loadChildren": "health-module" }
+      ],
+      "authenticatedRoutes": [
+        { "path": "", "redirectTo": "homepage-module", "pathMatch": "full" }
+      ]
+    },
+    "urlConfiguration": {
+      "urls": {
+        "authenticate": "http://localhost:8080/login/oauth",
+        "logout": "http://localhost:8080/login/logout",
+        "form/configuration": "http://localhost:8080/form/configuration",
+        "frontLogs": "http://localhost:8099/front-logs"
+      }
+    }
+  }
+}

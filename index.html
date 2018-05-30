@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+ <html>
+  <body>
+  
+   <h2>Demo with XHR request and session storage</h2>
+   
+   <div style="padding: 10px">
+     <button id="button_send" onclick="sendFrontLogsToBack()">Fetch and sent</button>
+   </div>
+   <div id="fetched_url_div" style="padding: 10px"></div>
+   <div id="session_data_div" style="padding: 10px; color: green"></div>
+
+   
+   <script>
+   var frontLogsUrl;
+
+   function sendFrontLogsToBack() {
+   	var result = confirm("Do you want to send logs?");
+   	if (result) {
+   		disableButtons();
+   		if (frontLogsUrl) {
+   			sendLogs(frontLogsUrl);
+   		} else {
+   			fetchBackendUrl();
+   		}
+   	}
+   }
+
+   function disableButtons() {
+   	console.log('sendFrontLogsToBack -> disable button for 2 seconds');
+   	document.getElementById("button_send").disabled = true;
+   	setTimeout(function () {
+   		document.getElementById("button_send").disabled = false;
+   	}, 2000);
+   }
+
+   function fetchBackendUrl() {
+   	var applicationConfigurationPath = './config/app-config.json';
+   	var xhttp = new XMLHttpRequest();
+   	xhttp.onload = function () {
+   		var parsedResponse = JSON.parse(this.responseText);
+   		if (parsedResponse.app && parsedResponse.app.urlConfiguration && parsedResponse.app.urlConfiguration.urls && parsedResponse.app.urlConfiguration.urls.frontLogs) {
+   			frontLogsUrl = parsedResponse.app.urlConfiguration.urls.frontLogs;
+   			console.log('resolved URL from app-config ' + frontLogsUrl);
+   			document.getElementById("fetched_url_div").innerHTML = 'Fetched URL= ' + frontLogsUrl;
+   			document.getElementById("fetched_url_div").style.color = 'blue';
+   			sendLogs(frontLogsUrl);
+   		} else {
+   			console.log('ERROR while reading response - there is no frontLogs in urls.');
+   			document.getElementById("fetched_url_div").innerHTML = 'ERROR while reading response - there is no frontLogs in urls.';
+   			document.getElementById("fetched_url_div").style.color = 'red';
+   		}
+   	};
+   	xhttp.onerror = function (evt) {
+   		console.log('There was an error!', evt);
+   		document.getElementById("fetched_url_div").innerHTML = 'There was an error!';
+   		document.getElementById("fetched_url_div").style.color = 'red';
+   	};
+   	xhttp.open("GET", applicationConfigurationPath, true);
+   	xhttp.send();
+   }
+
+   function sendLogs(url) {
+   	console.log('sendLogs', url);
+   	var xhr = new XMLHttpRequest();
+   	xhr.open('POST', url, true);
+   	xhr.setRequestHeader('Content-type', 'application/json');
+   	xhr.onload = function () {
+   		console.log('response after sending logs to backend ', this.responseText);
+   	}
+   	// write some temp data
+   	sessionStorage.setItem('STORED_LOGS', 'mocked front logs');
+   	var emaStoredLogs = sessionStorage.getItem('STORED_LOGS');
+   	var data = JSON.stringify({
+   			"log": emaStoredLogs
+   		});
+   	console.log('session data read ', data);
+	document.getElementById("session_data_div").innerHTML = 'Data to be send= ' + data;
+   	xhr.send(data);
+   	sessionStorage.removeItem('STORED_LOGS');
+   }
+   </script>
+  
+  </body>
+</html>
