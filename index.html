@@ -5,25 +5,36 @@
 <h2>Demo with XHR request and session storage</h2>
 
 <div style="padding: 10px">
-    <button id="button_send" onclick="sendFrontLogsToBack()">Fetch and sent</button>
+    <button id="button_send" onclick="showDialog()">Fetch and sent</button>
 </div>
 <div id="fetched_url_div" style="padding: 10px;"></div>
 <div id="session_data_div" style="padding: 10px; color: green;"></div>
 <div id="result_div" style="padding: 10px;"></div>
 
+<dialog id="confirmDialog">Do you want to send logs?
+    <button onclick="sendFrontLogsToBack()">Yes</button>
+    <button onclick="closeDialog()">No</button>
+</dialog>
+
 
 <script>
+    var confirmDialog = document.getElementById("confirmDialog");
+    function showDialog() {
+        confirmDialog.showModal();
+    }
+    function closeDialog() {
+        confirmDialog.close();
+    }
+
     var frontLogsUrl;
 
     function sendFrontLogsToBack() {
-        var result = confirm("Do you want to send logs?");
-        if (result) {
-            disableButtons();
-            if (frontLogsUrl) {
-                sendLogs(frontLogsUrl);
-            } else {
-                fetchBackendUrl();
-            }
+        closeDialog();
+        disableButtons();
+        if (frontLogsUrl) {
+            sendLogs(frontLogsUrl);
+        } else {
+            fetchBackendUrl();
         }
     }
 
@@ -33,7 +44,7 @@
         setTimeout(function () {
             document.getElementById("button_send").disabled = false;
         }, 2000);
-        // clear data to be sent and result div
+        // clear page/divs
         document.getElementById("session_data_div").innerHTML = '';
         document.getElementById("result_div").innerHTML = '';
     }

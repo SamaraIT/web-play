@@ -54,5 +54,11 @@ function submitPoll(id) {
 	}, 5000);
 }
 ```
-
 https://stackoverflow.com/questions/15207177/disable-button-with-timeout?utm_medium=organic&utm_source=google_rich_qa&utm_campaign=google_rich_qa
+
+## dialog
+https://developer.mozilla.org/en-US/docs/Web/HTML/Element/dialog
+
+## web workers
+https://www.w3schools.com/html/html5_webworkers.asp  
+https://www.html5rocks.com/en/tutorials/workers/basics/
