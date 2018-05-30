@@ -58,6 +58,7 @@ https://stackoverflow.com/questions/15207177/disable-button-with-timeout?utm_med
 
 ## dialog
 https://developer.mozilla.org/en-US/docs/Web/HTML/Element/dialog
+* Microsoft browsers do not support HTML5 dialog element
 
 ## web workers
 https://www.w3schools.com/html/html5_webworkers.asp  
