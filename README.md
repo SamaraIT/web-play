@@ -1,4 +1,4 @@
-# Requirement
+# Requirement  
 Create valilla Javascript that will send front logs, stored in session storage, to backend.
 
 # Use case
