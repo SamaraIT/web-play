@@ -26,7 +26,7 @@ You would get error like `OPTIONS http://localhost:8099/front-logs net::ERR_CONN
 @RestController
 @RequestMapping('/front-logs')
 @Slf4j
-class FrontLogsControllerController implements ControllerTrait {
+class FrontLogsControllerController {
 
   @PostMapping()
   def storeLogs(@RequestBody LogData logData) {
