@@ -1,5 +1,5 @@
 # Requirement
-Create valilla Javascript that will send front logs, stored in session storage, to backend. Do not use Angular.
+Create valilla Javascript that will send front logs, stored in session storage, to backend.
 
 # Use case
 1. fetch backend URL by sending XHR request (GET)
